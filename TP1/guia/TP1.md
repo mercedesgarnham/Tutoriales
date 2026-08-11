@@ -4,7 +4,7 @@
 En este tutorial vamos a usar la terminal de Linux para analizar datos genómicos reales. El objetivo es aprender a automatizar tareas mediante el uso de comandos de Bash. 
 
 ## Objetivos
-1. Familiaarizarse con el uso de la terminal y sus comandos básicos para navegar, crear directorios y manipular archivos.
+1. Familiarizarse con el uso de la terminal y sus comandos básicos para navegar, crear directorios y manipular archivos.
 
 2. Obtener y procesar datos biológicos reales desde bases de datos públicas usando herramientas de línea de comandos.
 
@@ -39,7 +39,7 @@ Los investigadores han identificado que ciertas mutaciones puntuales en el gen *
 **En este tutorial**, vamos a recibir los datos de secuenciación del gen *blaKPC* de 5 pacientes de un hospital. Nuestro objetivo será:
 
 1. Analizar las secuencias del gen *blaKPC* de cada paciente.
-2. Traducir esas secuencias a proteína.
+2. Traducir esas secuencias de ADN a la secuencia proteica.
 3. Identificar qué pacientes contienen cepas con la mutación S179G.
 4. Entregar un informe al hospital indicando qué pacientes están contagiados con cepas resistentes.
 
@@ -109,7 +109,7 @@ En bioinformática, Bash es fundamental para procesar grandes volúmenes de dato
 
 #### En Windows (con WSL)
 
-*   **Método rápido:** Abrí el menú de Inicio, escribí **"Ubuntu"** (o el nombre de la distribución que instalaste) y hacé clic para abrirla.
+*   **Método rápido:** Abrí el menú de Inicio, escribí **"Ubuntu"** (o el nombre de la distribución que instalaste) o WSL y hacé clic para abrirla.
 *   **Desde la línea de comandos de Windows:** Si ya tenés una terminal de Windows (CMD o PowerShell) abierta, escribí `wsl` y presioná Enter. Esto te lleva directamente a la terminal de Linux.
 
 **Verificación:** Cuando veas algo como `usuario@nombre_pc:~$`, significa que la terminal está lista para recibir comandos.
@@ -248,7 +248,7 @@ Un **path relativo**, en cambio, indica la ubicación de un archivo o carpeta en
 
 Ambos tipos de paths tienen sus ventajas y desventajas.
 
-Los **paths absolutos** tienen la ventaja de funcionar siempre, pero al usar toda la estructura toman más tiempo de escribir y son más suceptibles a cambios de directorios (si muevo un archivo de lugar tengo que reescribir el comando).
+Los **paths absolutos** tienen la ventaja de funcionar siempre, pero al usar toda la estructura toman más tiempo de escribir y son más susceptibles a cambios de directorios (si muevo un archivo de lugar tengo que reescribir el comando).
 
 Por otro lado, los **paths relativos** son mucho más rápidos de escribir y en muchos casos funcionan en diferentes ubicaciones (o computadoras), pero al depender de la ubicación de la terminal esto puede causar problemas si pienso que estoy en una carpeta pero estoy realmente en otra. En esta cursada vamos a usar ambos para diferentes casos.
 
@@ -257,7 +257,7 @@ Además de estos dos tipos, es importante conocer algunos símbolos especiales q
 - El punto (.) representa el directorio actual.
 - Los dos puntos (..) representan el directorio padre (un nivel arriba).
 - La barra inclinada (/) se usa en Linux, macOS y sistemas Unix como separador de carpetas.
-- La barra invertida (\) se usa en Windows como separador (aunque muchas herramientas modernas aceptan también la barra inclinada).
+- La barra invertida (`\`) se usa en Windows como separador (aunque muchas herramientas modernas aceptan también la barra inclinada).
 
 Entender la diferencia entre paths absolutos y relativos es clave para evitar errores como "archivo no encontrado", especialmente cuando trabajás en proyectos que se mueven entre distintos equipos o sistemas operativos.
 
@@ -325,7 +325,7 @@ rm -r carpeta_con_datos
 
 ```bash
 project/
- ├── data/
+ ├── datos/
  ├── scripts/
  └── results/
 ```
@@ -336,7 +336,7 @@ project/
 
 <div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
 <strong>✏️ Pregunta 2</strong><br>
-Ejecutar el comando para generar una carpeta de "TP01" 
+Completar y ejecutar el comando para generar una carpeta de "TP01" 
 
 ```bash
     mkdir
@@ -406,7 +406,7 @@ Dentro de la carpeta "TP01" generar las subcarpetas necesarias para obtener la s
 
 ```bash
     TP01/
-    ├── data/
+    ├── datos/
     ├── scripts/
     └── resultados/
 ```
@@ -471,7 +471,7 @@ Listar una carpeta específica
 ls -lh /home/estudiante/documentos/
 ```
 
-Ordenar por tamaño
+Ordenar por tamaño con detalles
 
 ```bash
 ls -lS
@@ -503,7 +503,7 @@ Dentro de la carpeta TP01 ejecutar `ls -lh` para verificar que contenga la estru
 
 ```bash
     TP01/
-    ├── data/
+    ├── datos/
     ├── scripts/
     └── resultados/
 ```
@@ -578,7 +578,7 @@ Descargar un archivo y guardarlo con otro nombre:
 Dentro de la carpeta del TP01 ingresar a la carpeta `datos/`. Ejecutar el siguiente comando para obtener las secuencias:
 
 ```bash
-    wget https://github.com/mercedesgarnham/Tutoriales/blob/main/TP1/pacientes.fasta
+    wget https://raw.githubusercontent.com/mercedesgarnham/Tutoriales/refs/heads/main/TP1/data/pacientes.fasta
 ```
 
 </div>
@@ -896,7 +896,7 @@ Vamos a pensar que pasos son necesarios llevar a cabo para realizar este anális
 El script ya está disponible en el repositorio del curso. Ingresá a la carpeta `scripts/` y ejecuta lo siguiente:
 
 ```bash
-wget https://github.com/mercedesgarnham/Tutoriales/blob/main/TP1/script.sh
+    wget https://raw.githubusercontent.com/mercedesgarnham/Tutoriales/refs/heads/main/TP1/data/script.sh
 ```
 
 ---
