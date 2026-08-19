@@ -2,9 +2,9 @@
 
 ## Objetivos
 
-* Entender el funcionamiento básico del algoritmo de alineamiento de pares de secuencias de Needleman-Wunsch.
-* Aprender a interpretar un Dot-Plot, pudiendo identificar las regiones relevantes que contienen patrones.
-* Comprender los conceptos de identidad, similitud y homología de secuencias, y establecer una clara diferencia entre los mismos. 
+1. Entender el funcionamiento básico del algoritmo de alineamiento de pares de secuencias de Needleman-Wunsch.
+2. Aprender a interpretar un Dot-Plot, pudiendo identificar las regiones relevantes que contienen patrones.
+3. Comprender los conceptos de identidad, similitud y homología de secuencias, y establecer una clara diferencia entre los mismos. 
 
 ---
 
@@ -36,18 +36,39 @@ Existen varios algoritmos de alineamiento:
 
 * Los **alineamientos mixtos**, que combinan los dos anteriores.
 
+<div style="border-left: 6px solid  #555; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Algoritmo de Needleman-Wunsch</strong><br>
+
+El algoritmo de Needleman-Wunsch es un método de programación dinámica para el alineamiento global de secuencias, desarrollado por Saul Needleman y Christian Wunsch en 1970. Este algoritmo garantiza encontrar el alineamiento óptimo entre dos secuencias completas, desde el primer hasta el último carácter, maximizando la similitud global.
+
+<strong>¿Cómo funciona?</strong><br>
+
+El algoritmo se basa en tres pasos fundamentales:
+
+1. **Inicialización:** Construye una matriz de puntuación donde las filas representan los caracteres de una secuencia y las columnas los de la otra. Los bordes se llenan con penalizaciones acumulativas por gaps (huecos).
+
+2. **Llenado de la matriz:** Para cada celda, calcula el máximo entre tres valores posibles:
+   - Coincidencia/sustitución: puntuación diagonal + match/mismatch
+   - Inserción: puntuación de arriba + penalización por gap
+   - Deleción: puntuación de la izquierda + penalización por gap
+
+3. **Trazado inverso (backtracking):** Desde la última celda (esquina inferior derecha), se reconstruye el alineamiento óptimo siguiendo el camino de las puntuaciones máximas hacia la esquina superior izquierda.
+
+</div>
+
 ## **Dynamic programming**
 
 Dado un par de secuencias y un sistema de puntuación o *scoring* se pueden aplicar diversos algoritmos para encontrar el alineamiento que dé el mejor puntaje.
 
 El algoritmo más popular utiliza un método matemático llamado ***dynamic programming***. El mismo consiste en comparar ambas secuencias construyendo una matriz del alineamiento. Brevemente:
 
-!!! info ""
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Pasos a seguir</strong><br>
 
-    1. Se comienza en el extremo superior izquierdo de la matriz, con un puntaje inicial de 0. 
-    2. En cada paso, se calcula el costo que tiene aparejado desplazarse de una celda a la otra, dado el sistema de puntajes pre-establecido, y se elige la opción más favorable, es decir aquella que **maximice** el puntaje global del alineamiento. 
-    3. En cada iteración se guarda el puntaje con el que se llegó a una celda dada y el movimiento que originó dicho camino o *path*, indicado típicamente con una flecha. Una vez que la matriz está completa en su totalidad se puede recorrer hacia atrás o realizar un *traceback*, desde el extremo inferior derecho al superior izquierdo, para reconstruir el alineamiento.
-
+1. Se comienza en el extremo superior izquierdo de la matriz, con un puntaje inicial de 0. 
+2. En cada paso, se calcula el costo que tiene aparejado desplazarse de una celda a la otra, dado el sistema de puntajes pre-establecido, y se elige la opción más favorable, es decir aquella que **maximice** el puntaje global del alineamiento. 
+3. En cada iteración se guarda el puntaje con el que se llegó a una celda dada y el movimiento que originó dicho camino o *path*, indicado típicamente con una flecha. Una vez que la matriz está completa en su totalidad se puede recorrer hacia atrás o realizar un *traceback*, desde el extremo inferior derecho al superior izquierdo, para reconstruir el alineamiento.
+</div>
 
 La principal ventaja de este método es que **siempre encuentra el alineamiento óptimo** entre las secuencias dadas. 
 
@@ -55,7 +76,8 @@ Sin embargo, una desventaja es que pueden existir **varios** alineamientos que s
 
 Otra desventaja es de origen técnica: la exhaustividad con la que el algoritmo realiza la búsqueda hace que su velocidad dependa de la longitud de las secuencias implicadas, haciendo poco eficiente la búsqueda de similitud de una secuencia contra una base de datos. Para esto existen diferentes adaptaciones del algoritmo que se verán más adelante.
 
-### Ejemplo
+<div style="border-left: 6px solid  #6f42c1; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Ejemplos</strong><br>
 
 Imaginen que queremos alinear las secuencias **TCGCA** y **TCCA** utilizando un esquema de *scoring* de:
 
@@ -77,14 +99,7 @@ Si computamos los puntajes de ambos alineamientos, obtenemos que:
 
 * La **opción 1** tiene un puntaje de 2. Se propone colocar un único **gap** permitiendo alinear al resto de los nucleótidos en ambas secuencias con eventos de **match**.
 * La **opción 2** tiene un puntaje de 0. Las secuencias estudiadas se alinean con 1 **gap**, 1 **mismatch** y 3 **matches**. La estrategia es subóptima en relación a **1**.
-
-!!! question "Pregunta"
-
-    Si hubiésemos aplicado la metodología de *dynamic programming* para realizar un alineamiento global de estas secuencias, ¿cuál sería el *path* óptimo resultante?
-
-!!! done ""
-    
-    A *priori* uno pensaría que es el *path* **1**, pero hagamos el ejercicio para corroborar si esto es efectivamente así. 
+</div>
 
 Para comenzar, refresquemos cómo funcionaba el método de *dynamic programming*.
 
@@ -92,20 +107,14 @@ Para comenzar, refresquemos cómo funcionaba el método de *dynamic programming*
 
 Para llegar desde el extremo superior izquierdo (= inicio) de la matriz del alineamiento a la posición marcada con una <span style="color:red;font-family:monospace"><b>x</b></span> podríamos, hipotéticamente, tomar cualquiera de los caminos dibujados en la figura de más arriba. Estos *paths* darían alinemientos diferentes de las secuencias **TC** con **TC**. 
 
-!!! question "Pregunta"
-     
-     Pero... ¿cuál es el procedimiento iterativo empleado por el método de *dynamic programming* para obtener el alineamiento óptimo entre dos secuencias?
-
-!!! done ""
-
-      Para llegar a cualquier celda de la matriz, uno puede acceder por, como máximo, 3 direcciones. La idea es siempre moverse en la dirección que maximice el *score* o puntaje. 
+Para llegar a cualquier celda de la matriz, uno puede acceder por, como máximo, 3 direcciones. La idea es siempre moverse en la dirección que **maximice** el *score* o puntaje. 
 
 
-Veamos que :
+Veamos que:
 
-* un movimiento en la dirección <span style="color:blue;"><b>horizontal</b></span>, de la posición **(i, j-1)** a la posición **(i, j)**, supone introducir un **gap** en la secuencia del eje vertical i
-* un movimiento en la dirección <span style="color:green;"><b>diagonal</b></span>, de la posición **(i-1, j-1)** a la posición **(i, j)**, supone un **match** o un **mismatch** entre los nucleótidos enfrentados
-* un movimiento en la dirección <span style="color:purple;"><b>vertical</b></span>, de la posición **(i-1, j)** a la posición **(i, j)**, supone introducir un **gap** en la secuencia del eje horizontal j
+- un movimiento en la dirección <span style="color:blue;"><b>horizontal</b></span>, de la posición **(i, j-1)** a la posición **(i, j)**, supone introducir un **gap** en la secuencia del eje vertical i
+- un movimiento en la dirección <span style="color:green;"><b>diagonal</b></span>, de la posición **(i-1, j-1)** a la posición **(i, j)**, supone un **match** o un **mismatch** entre los nucleótidos enfrentados
+- un movimiento en la dirección <span style="color:purple;"><b>vertical</b></span>, de la posición **(i-1, j)** a la posición **(i, j)**, supone introducir un **gap** en la secuencia del eje horizontal j
 
 Teniendo en cuenta la fórmula para obtener el *score* enunciada más arriba, podemos comenzar con nuestro ejercicio!
 
@@ -135,36 +144,43 @@ Para moverse del (0, 0) al (1, 1) hay 3 maneras:
 * **-2** es el puntaje de la celda inicial (0, 1)
 * El movimiento vertical implica colocar un **gap**: -2
 
-!!! note "Resultado:"
+
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Resultado</strong><br>
 
    ```
    eje j: T -
    eje i: - T
    ```
+</div>
 
 **2.** Hacer un movimiento **horizontal**, lo cual da un score de -2 + (-2) = -4. Similar al caso anterior:
 
 * **-2** es el puntaje de la celda inicial (1, 0)
 * El movimiento horizontal implica colocar un **gap**: -2
     
-!!! note "Resultado:"
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Resultado</strong><br>
 
    ```
    eje j: - T
    eje i: T -
    ```
+</div>
 
 **3.** Hacer un movimiento **diagonal**, lo cual da un score de 0 + (+1). Implica alinear ambos nucléotidos!
 
 * **0** es el puntaje de la celda inicial (0, 0)
 * Hay **T** en las ambas secuencias. Es un **match**: +1
 
-!!! note "Resultado:"
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Resultado</strong><br>
 
    ```
    eje j: T 
    eje i: T
    ```
+</div>
 
 Para decidir qué valor ubicamos en la celda simplemente optamos por el que nos dé el **mayor score**, en este caso 1, y se marca el movimiento que lo produjo: un movimiento diagonal.
 
@@ -203,19 +219,9 @@ que podemos corroborar que es idéntico al *path* **1** del ejemplo que se plant
 ### Ejercicio 1
 
 #### ✏️ Paso 1
-En grupo, realizá el alineamiento de las secuencias **ATTGG** con **AGATGG**, usando el esquema de puntajes: M=1, m=-1, g=-2. 
+Realizá el alineamiento de las secuencias **ATTGG** con **AGATGG**, usando el esquema de puntajes: M=1, m=-1, g=-2. 
 
 ![ejDynamic](./img/matrixNW.png)
-
-<!---
-Para esto, abrí el siguiente [Google Jamboard](https://jamboard.google.com/d/1MGSgTaSSm7bAoHsfw1HCg7CHxuVOfKWVORQmL2vyymw/edit?usp=sharing), guardá una copia local del mismo en tu Google Drive y compartí el GJamboard a tus compañeros de equipo. 
-
-!!! attention "Atención"
-      
-      Para guardar una copia local del GJamboard en tu GDrive, cliqueá en el ícono con 3 puntitos, en el extremo superior derecho (Más acciones). Luego seleccioná la opción "Hacer una copia". Elegí la carpeta adonde deseas guardarlo dentro de tu unidad y cliqueá aceptar. 
-
-¡Ahora estás listo para empezar! Recordá rellenar la matriz con todos los puntajes y flechas faltantes. Cuando termines, reconstruí el *path* del alineamiento.
---->
 
 #### ✏️ Paso 2
 Cuando termines el ejercicio anterior podés corrobar la solución que hallaste ingresando en [UniFreiburg-FreiburgRNATools](http://rna.informatik.uni-freiburg.de/Teaching/index.jsp?toolName=Needleman-Wunsch).
@@ -254,87 +260,125 @@ Observá nuevamente la matriz del alineamiento que obtuviste en **1.2**. Cliqué
 ¿Entendés qué significa esto? ¿Podés relacionarlo con los dos caminos óptimos posibles que existen para este alineamiento?
 <br>
 
-<!--
-**1.3.3** Finalmente te propongo que realices el siguiente alineamiento: 
 
-* Sequence a: **AGATGG** y Sequence b: **ATTGGG**. 
-* Seleccioná optimización de Similarity. 
-* Esquema de puntajes: **M:1, m:-1, g:-5**. 
+<div style="border-left: 6px solid  #555; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Algoritmo de Smith-Waterman</strong><br>
 
-Registrá con atención el resultado. Ahora cambiemos el esquema de *scoring*, dejando el mismo valor para match, pero intercambiando los puntajes de gap y mismatch. 
-¿Cómo cambió el output? ¿Qué observás ahora en las secuencias halladas como solución óptima en comparación a lo que arrojaba el algoritmo con los parámetros anteriores?
--->
+El algoritmo de Smith-Waterman es un método de programación dinámica para el alineamiento local de secuencias, desarrollado por Temple Smith y Michael Waterman en 1981. A diferencia de Needleman-Wunsch, este algoritmo identifica las regiones de mayor similitud entre dos secuencias, sin necesidad de alinearlas en su totalidad.
 
-## Dot-Plots
+<strong>¿Cómo funciona?</strong><br>
 
-Los dot-plots son representaciones gráficas que dan un pantallazo sobre la similitud entre dos secuencias. En ellos se pueden identificar patrones que aporten información sobre la relación entre ambas secuencias.
-La forma de obtener uno es muy sencilla: se establece una matriz donde cada elemento de una de las secuencias se corresponde con una fila y los de la otra con una columna. Acto seguido se procede a colorear cada celda donde los caracteres correspondientes a fila y columna sean equivalentes.
-Por ejemplo:
+El algoritmo sigue una lógica similar a Needleman-Wunsch pero con una diferencia clave:
 
-![DotPlot](./img/DotPlot1.jpeg)
+1. **Inicialización:** Construye una matriz donde los bordes se llenan con ceros (no con penalizaciones acumulativas).
 
-Nosotros podemos utilizar la herramienta de EMBOSS ```dotmatcher``` para generar nuestros propios plots. Para esto, vamos a usar el **Google colab** que se encuentra al lado de los materiales del TP.
+2. **Llenado de la matriz:** Para cada celda, calcula el máximo entre:
+   - Cero (reinicio del alineamiento)
+   - Coincidencia/sustitución: puntuación diagonal + match/mismatch
+   - Inserción: puntuación de arriba + penalización por gap
+   - Deleción: puntuación de la izquierda + penalización por gap
 
-!!! info "Recordatorio"
-
-    Para ver qué parámetros toma de entrada la función, se puede ver la ayuda corriendo ```dotmatcher -h``` en bash.
+3. **Trazado inverso (backtracking):** Comienza desde la celda con la puntuación máxima en toda la matriz y retrocede hasta encontrar un cero, reconstruyendo así el segmento de mayor similitud.
+</div>
 
 
-### Ejercicio 2
+<div style="border-left: 6px solid  #555; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Diferencia clave con Needleman-Wunsch</strong><br>
 
-Generá la carpeta de trabajo con la estructura que vimos en el [TP1](https://bioinformatica-iib.github.io/introduccion_bioinformatica/practicos/TP01a_Linux/#pregunta-3)
+| Aspecto | Needleman-Wunsch | Smith-Waterman |
+|---------|------------------|----------------|
+| Tipo de alineamiento | Global (toda la secuencia) | Local (solo regiones similares) |
+| Valores en bordes | Penalizaciones acumulativas | Ceros |
+| Puntuaciones negativas | Permiten penalizaciones acumulativas | Se convierten a cero (reinicio) |
+| Punto de inicio del backtracking | Esquina inferior derecha | Celda con valor máximo |
+| Mejor para... | Secuencias relacionadas en su totalidad | Secuencias con dominios conservados |
 
-#### ✏️ Paso 1
-Descargá los materiales de este TP ejecutando el siguiente comando: 
+</div>
 
-```Bash
-wget https://bioinformatica-iib.github.io/introduccion_bioinformatica/practicos/TP02_Alineamientos/data/Data-TP2.zip
-```
+---
 
-#### ✏️ Paso 2
-Descomprimí los materiales usando el siguiente comando 
+## Dot Plots
 
-```Bash
-unzip Data-TP2.zip
-```
+Un **Dot Plot** (o gráfico de puntos) es una herramienta visual para comparar dos secuencias biológicas (ADN, ARN o proteínas). 
 
-#### ✏️ Paso 3
-Listá el contenido de la carpeta datos  
+### ¿Cómo funciona?
+- Se colocan **dos secuencias** en los ejes **X** e **Y**.
+- Se dibuja un **punto (dot)** en cada coordenada donde los caracteres (bases o aminoácidos) coinciden y tienen un puntaje mayor al Criterio de stringencia.
+- Las **diagonales** en el gráfico indican regiones de similitud o alineamiento entre las secuencias.
 
-```Bash
-ls
-```
+### Parámetros principales:
 
-#### ✏️ Paso 4
-Utilizá la secuencia *HS-ch11-fragment.fasta* que se encuentra en la carpeta *data* para compararla contra sí misma. Esta secuencia es un pequeño fragmento del cromosoma 1 de *Homo sapiens* y la vamos a utilizar únicamente para ver algunos de los patrones que podemos encontrar en un dotplot. 
+| Parámetro | ¿Qué hace? |
+|-----------|------------|
+| **Ventana (window)** | Número de caracteres consecutivos que se comparan a la vez. |
+| **Criterio de stringencia (stringency)** | Número mínimo de coincidencias dentro de la ventana para dibujar un punto. |
 
-Visualizá el archivo *HS-ch11-fragment.fasta* 
 
-```Bash
-head HS-ch1-fragment.fasta 
-```
+### Ejercicio 2:
 
-#### ✏️ Paso 5
-Generá un dotplot utilizando la secuencia *HS-ch11-fragment.fasta* contra sí misma.
+Vamos a comparar **dos secuencias de hemoglobina** usando la herramienta online [Dotlet](https://dotlet.vital-it.ch/).
 
-```Bash
-dotmatcher -graph pdf HS-ch1-fragment.fasta HS-ch1-fragment.fasta
-```
+#### ✏️ Paso 1: 
 
-**¿Qué podés interpretar de este dotplot?**
+Dentro del superior de secuencias pegar las siguientes secuencias:
 
-La verdad es que el plot es bastante ruidoso, esto sucede muy a menudo en secuencias genómicas ya que la cantidad de caracteres que componen las secuencias es muy limitada (solo 4) y por ello hay muchas ocurrencias y por lo tanto muchos puntos.
-Para limpiar el plot y quedarnos con los matches más significativos podemos jugar con dos parámetros:
+**Secuencia 1:**
 
-* *windowsize*: Tamaño de ventana
-* *threshold*: Umbral de ocurrencia
+MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFK
 
-Esto quiere decir que ```dotmatcher``` sólo va a poner un punto cuando un fragmento del largo *windowsize* contenga un score mayor a *threshold*.
-Por ejemplo:
+**Secuencia 2:**
 
-```Bash
-dotmatcher -graph pdf -windowsize 50 -threshold 20 HS-ch1-fragment.fasta HS-ch1-fragment.fasta
-```
+MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFK
+
+**Qué hacer:**
+- Configurá **Window = 10** .
+- Hacé clic en **"Draw"**.
+
+**Qué observar:** Diagonal principal perfecta (100% identidad). No hay diagonales secundarias.
+
+#### ✏️ Paso 2: 
+
+Dentro del superior de secuencias pegar las siguientes secuencias:
+
+**Secuencia 1:**
+
+MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFK
+
+**Secuencia 2:**
+
+MVLSPADKTNMVLSPADKTNGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFK
+
+**Explicación:** La Secuencia 2 tiene el motivo "MVLSPADKTN" repetido al principio (20 aa), mientras que la Secuencia 1 lo tiene solo una vez. El resto de la secuencia (80 aa) es idéntico.
+
+#### ✏️ Paso 3:
+
+Dentro del superior de secuencias pegar las siguientes secuencias:
+
+**Secuencia 1:**
+
+MVLSPADKTNVKAAWGKVGAHAGEYGAEALEEEEEEEEEEEEEEPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFK
+
+**Secuencia 2:**
+
+MVLSPADKTNVKAAWGKVGAHAGEYGAEALEEEEEEEEEEEEEEPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFK
+
+**Explicación:** La Secuencias están compuestas por bloques de aminoácidos repetidos (E), lo que la hace de baja complejidad.
+
+**Qué observar:** En la zona de baja complejidad , el dotplot se vuelve extremadamente denso, con múltiples diagonales paralelas y manchas de puntos que reflejan las repeticiones. La región de baja complejidad produce un patrón característico de "ruido" estructurado.
+
+<div style="border-left: 6px solid  #555; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>¿Cómo elegir los parámetros ideales?</strong><br>
+
+**No hay una combinación única y perfecta.**
+
+La elección de los parámetros (window y stringency) depende de varios factores:
+
+- **Tipo de secuencia:** ADN (4 letras) vs. Proteínas (20 aminoácidos). El ADN tiene más coincidencias aleatorias, por lo que necesita filtros más estrictos.
+- **Similitud esperada:** Secuencias muy similares vs. secuencias divergentes. Cuanto más divergentes sean, más ruido tendrás que filtrar.
+- **Longitud de las secuencias:** Secuencias más largas generan más ruido estadístico.
+- **Pregunta biológica:** ¿Buscas dominios conservados? ¿Repeticiones? ¿Reordenamientos?
+
+**La mejor estrategia es siempre experimentar con diferentes valores y observar cómo cambia el gráfico.** No existe una combinación mágica; los parámetros óptimos son aquellos que mejor revelan la información biológica que te interesa visualizar.
 
 Si aumentás estos parámetros podés ir eliminando fragmentos que corresponden a secciones compartidas más cortas, sin embargo existe una relación de compromiso, utilizar tamaño de ventana y umbral muy grandes nos llevan a perder información por lo que hay que seleccionarlos con cuidado. Aqui hay algunos patrones con los que te podés encontrar en este tipo de plots:
 
@@ -348,79 +392,136 @@ Si aumentás estos parámetros podés ir eliminando fragmentos que corresponden 
 **f)** Zonas altamente repetitivas (minisatelites).  
 **g)** Secuencias con alta conservación.  
 **h)** Inserción o deleción.  
+</div>
 
-#### ✏️ Paso 5
+### Ejercicio 3: Construcción de Dot Plot con Dotmatcher (EmbOSS)
+
+Ahora vamos a generar el mismo dot plot pero desde la **terminal** usando `dotmatcher` del paquete **EmbOSS**.
+
+### Requisitos:
+- Tener EmbOSS instalado (`sudo apt install emboss` en Linux).
+- Tener las secuencias en archivos `.fasta`.
+
+#### ✏️ Paso 
+
+Generá la estrcutura de directorios correspondiente y descargá los materiales de este TP ejecutando el siguiente comando: 
+
+```bash
+wget https://raw.githubusercontent.com/mercedesgarnham/Tutoriales/refs/heads/main/TP2/data/humano_alfa.fasta
+```
+
+```bash
+wget https://raw.githubusercontent.com/mercedesgarnham/Tutoriales/refs/heads/main/TP2/data/chimpance_alfa.fasta
+```
+
+#### ✏️ Paso 2
+Visualizá las secuencias usando el comando `cat`
+
+Esperamos ver algo asi:
+
+**humano_alfa.fasta**
+
+>Humano_alfa
+MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR
+
+**chimpance_alfa.fasta**
+
+>Chimpance_alfa
+MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR
+
+#### ✏️ Paso 3
+Generá un dotplot utilizando la secuencias descargadas en el paso 1
+
+```Bash
+dotmatcher -graph pdf humano_alfa.fasta chimpance_alfa.fasta
+```
+
+Para limpiar el plot y quedarnos con los matches más significativos podemos jugar con dos parámetros:
+
+* *windowsize*: Tamaño de ventana
+* *threshold*: Umbral de ocurrencia
+
+Esto quiere decir que ```dotmatcher``` sólo va a poner un punto cuando un fragmento del largo *windowsize* contenga un score mayor a *threshold*.
+Por ejemplo:
+
+```Bash
+dotmatcher -graph pdf -windowsize 50 -threshold 20 humano_alfa.fasta chimpance_alfa.fasta
+```
+
+#### ✏️ Paso 4
 Cambiá los parámetros *windowsize* y *threshold* hasta obtener un plot que te parezca adecuado. **¿Qué podés interpretar del mismo?** Identificá patrones.
 
-#### ✏️ Paso 6
-- Ingresá a [Dotlet.vital-it.ch](https://dotlet.vital-it.ch/).
-- Haz clic en **`Input`**.
-- Pega tu secuencia `HS-ch11-fragment.fasta` (con o sin cabecera `>`).
-- Ponle un nombre (ej. `HS-ch11`) y haz clic en **`Ok`**.
-- En los menús desplegables (Horizontal y Vertical), selecciona la misma secuencia (`HS-ch11`) en ambos. Esto hará una **autocomparación** para buscar repeticiones internas.
+<div style="border-left: 6px solid  #555; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Identidad, Similitud y Homología</strong><br>
 
-#### ✏️ Paso 7
-- Es el número de letras que se comparan a la vez.
-- **Valores recomendados para ADN:**
-  - **7-9:** Muy sensible, pero genera mucho ruido.
-  - **10-12:** Punto de equilibrio ideal (empieza aquí).
-  - **15-20:** Muy estricto, solo muestra repeticiones largas y perfectas.
-- Haz clic en **`Compute`** para generar el gráfico.
+Los términos identidad, similitud y homología se suelen utilizar como sinónimos por muchos investigadores, sin embargo no lo son.
 
-#### ✏️ Paso 8
-Al hacer `Compute`, aparecerá un gráfico de barras (histograma):
+* La **identidad** es una es una característica cuantitativa de un par de secuencias, donde se cuenta cuántos elementos (residuos, nucleótidos, aminoácidos etc) son idénticos entre ambas secuencias después de alinearlas. 
 
-- **Pico enorme a la izquierda** → Ruido (coincidencias al azar).
-- **Pico pequeño a la derecha** → Señal biológica real.
-- **Acción:** Arrastra la **manija izquierda** (umbral inferior) justo hasta el **valle** que separa ambos picos.
-- **Resultado:** El fondo de puntos sucios desaparece y solo quedan las diagonales nítidas.
+* La **similitud** es una característica cuantitativa de un par de secuencias, donde se establece en qué grado estas se parecen (por ejemplo aplicando los algoritmos antes vistos, utilizando un sistema de puntaje) después de alinearlas. 
 
-#### ✏️ Paso 9
-- **Diagonal principal:** Línea recta de esquina a esquina. Es la secuencia comparada consigo misma (siempre presente).
-- **Diagonales paralelas (fuera de la principal):** Indican **repeticiones internas**. Cuanto más larga y clara es la línea, más conservada está la repetición.
+* La **homología**, por otro lado, es una característica cualitativa, dos secuencias SON o NO SON homólogas. Homología implica específicamente que el par de secuencias estudiadas *provienen de un mismo ancestro común*. Esta afirmación es completamente hipotética, ya que, salvo en contados casos, no se puede corroborar. Uno puede inferir que este es el caso dado la similitud observada en las secuencias actuales, sin tener acceso a las secuencias ancestrales.
 
-#### ✏️ Paso 10
-- Haz **clic izquierdo** sobre cualquier punto o diagonal del gráfico.
-- En la ventana inferior se mostrará el alineamiento exacto de esa posición.
-- Usa las **teclas de flecha (↑, ↓, ←, →)** para moverte a lo largo de la diagonal y examinar la repetición en detalle.
-
-!!! info "Identidad, Similitud y Homología"
-
-    Los términos identidad, similitud y homología se suelen utilizar como sinónimos por muchos investigadores, sin embargo no lo son.
-
-    * La **identidad** es una es una característica cuantitativa de un par de secuencias, donde se cuenta cuántos elementos (residuos, nucleótidos, aminoácidos etc) son idénticos entre ambas secuencias después de alinearlas. 
-
-    * La **similitud** es una característica cuantitativa de un par de secuencias, donde se establece en qué grado estas se parecen (por ejemplo aplicando los algoritmos antes vistos, utilizando un sistema de puntaje) después de alinearlas. 
-
-    * La **homología**, por otro lado, es una característica cualitativa, dos secuencias SON o NO SON homólogas. Homología implica específicamente que el par de secuencias estudiadas *provienen de un mismo ancestro común*. Esta afirmación es completamente hipotética, ya que, salvo en contados casos, no se puede corroborar. Uno puede inferir que este es el caso dado la similitud observada en las secuencias actuales, sin tener acceso a las secuencias ancestrales.
-
-!!! attention "Atención"
-
-    Decir que un par de secuencias tiene N% de homología es TOTALMENTE incorrecto.
+**Importante:** Decir que un par de secuencias tiene N% de homología es TOTALMENTE incorrecto.
 
 A partir de esta relación entre similitud y homología se pueden inferir relaciones entre diferentes especies, buscar posibles funciones de una secuencia desconocida, etc.
+</div>
 
-### Ejercicio 3
+### Ejercicio 4
 
 Determinar qué especies están más relacionadas utilizando la ribonucleasa pancreática de caballo (*Equus caballus*), ballena enana (*Balaenoptera acutorostrata*) y canguro rojo (*Macropus rufus*).
- 
+
 #### ✏️ Paso 1
+Descargá los materiales de este TP ejecutando el siguiente comando: 
+
+```bash
+wget https://raw.githubusercontent.com/mercedesgarnham/Tutoriales/refs/heads/main/TP2/data/Balaenoptera_acutorostrata.fasta
+```
+
+```bash
+wget https://raw.githubusercontent.com/mercedesgarnham/Tutoriales/refs/heads/main/TP2/data/Elephas_maximus.fasta
+```
+
+```bash
+wget https://raw.githubusercontent.com/mercedesgarnham/Tutoriales/refs/heads/main/TP2/data/Equus_caballus.fasta
+```
+
+#### ✏️ Paso 2
+Visualizá las secuencias usando el comando `cat`
+
+#### ✏️ Paso 3
 Utilizá la herramienta de alineamiento global de EMBOSS ```needle``` (pueden leer el manual para ver que opciones admite ejecutnado el comando ```man needle```) para comparar las tres secuencias.   
 
 ```Bash
 needle -gapopen 10 -gapextend 1 -asequence *secuencia_1* -bsequence *secuencia_2* -outfile *salida*
 ```
-#### ✏️ Paso 2
+#### ✏️ Paso 4
 Observá e interpretá las salidas obtenidas.
 
 * ¿Qué secuencias son más similares? ¿Tiene sentido el resultado obtenido?
 
-#### ✏️ Paso 3
+#### ✏️ Paso 5
 Analizá árbol filogenético de la Fig. 1 del [paper](https://drive.google.com/file/d/1CHS7KCkgDQvzqQ2A_l4y4LKRaoo8Eraf/view?usp=sharing) de O'Leary *et al.*, 2013. 
 Sabiendo que los caballos y las ballenas pertenecen al clado *Euungulata* y los canguros al clado *Marsupialia*, ubicá estos clado en el árbol.
 
-* ¿Esta información coincide con los resultados que obtuviste en el Paso 2?
-
+* ¿Esta información coincide con los resultados que obtuviste en el anterior?
 
 ![Animales](./img/Animales.png)
+
+---
+## Cierre:
+1. Que tipos de experimentos hicimos hoy?
+2. Completá la tabla con los temas vistos hoy:
+
+| Tema | Algoritmo | Tipo de datos | Base de datos | Análisis del resultado |
+| :--- | :--- | :--- | :--- | :--- |
+| (completar) | (completar) | (completar) | (completar) | (completar) | 
+
+3. Cumpliste con los objetivos del tutorial?
+
+| Objetivo | Se cumplió? |
+| :--- | :--- |
+|1. Entender el funcionamiento básico del algoritmo de alineamiento de pares de secuencias de Needleman-Wunsch. | Si / No |
+|2. Aprender a interpretar un Dot-Plot, pudiendo identificar las regiones relevantes que contienen patrones. | Si / No |
+|3. Comprender los conceptos de identidad, similitud y homología de secuencias, y establecer una clara diferencia entre los mismos.  | Si / No |
 
