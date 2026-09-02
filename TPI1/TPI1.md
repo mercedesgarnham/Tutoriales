@@ -95,7 +95,7 @@ Descargar el script de instalación usando el siguiente comando:
 
 
 ```bash
-    wget https://raw.githubusercontent.com/mercedesgarnham/Tutoriales/refs/heads/main/TPI1/data/script.sh
+    wget https://raw.githubusercontent.com/mercedesgarnham/Tutoriales/refs/heads/main/TPI1/data/script_instalacion.sh
 ```
 
 Cambiar el permiso de ejecucion y ejecutar el script como se vio en el TP1
