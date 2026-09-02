@@ -30,12 +30,70 @@
 <h1 id="tp-4-uso-de-información-contenida-en-alineamientos-múltiples-parte-i-motivos-lineales-expresiones-regulares-prosite"><strong>TP 4</strong>. Uso de información contenida en alineamientos múltiples (Parte I): motivos lineales, expresiones regulares, PROSITE </h1>
 <h2 id="objetivos">Objetivos </h2>
 <ol>
-<li>Comprender qué son los motivos lineales (SLiMs) y su relevancia biológica.</li>
+<li>Realizar un alineamiento múltiple de secuencias</li>
 <li>Aprender la simbología de las expresiones regulares y cómo se utilizan para representar motivos.</li>
 <li>Construir una expresión regular a partir de evidencia experimental.</li>
-<li>Utilizar herramientas web para visualizar motivos (WebLogo) y buscar motivos en bases de datos (PROSITE, ELM).</li>
-<li>Introducir el concepto de enriquecimiento de motivos mediante MEME.</li>
 </ol>
+<hr>
+<h2 id="alineamientos-múltiples">Alineamientos múltiples </h2>
+<p>Un alineamiento múltiple (MSA) involucra tres o más secuencias biológicas. Debido a que la tarea de alinear múltiples secuencias de largos biológicamente significativos suele ser muy demandante en términos de recursos computacionales y tiempos de ejecución estos requieren metodologías más sofisticadas para llevarse a cabo. Por ello la mayoría de los programas disponibles para realizar MSA utiliza heurísticas en vez de algoritmos de optimización global.</p>
+<div style="border-left: 6px solid #555; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Heurística</strong><br>
+      Es una estrategia que busca resolver un problema más simple cuya solución se interseca con la solución de un problema más complejo. Generalmente esto implica que no es seguro encontrar el mejor resultado pero sí una solución que sea aceptable. Las heurísticas se aplican con frecuencia en computación para poder resolver problemas que, por su complejidad, serían imposibles de abordar dados los limitados recursos con los que se cuentan.
+</div>
+<p>Dadas las secuencias de aminoácidos de un set de proteínas que se quieren comparar, el MSA muestra los residuos de cada proteína en una fila junto con los gaps que le correspondan de tal manera que todos los residuos "equivalentes" se encuentren en la misma columna. La utilidad de esta equivalencia depende de quien mire el alineamiento:</p>
+<ul>
+<li>Alguien que hace una filogenia puede enfocarse en que comparten un ancestro común;</li>
+<li>Alguien que hace biología estructural puede enfocarse en que son residuos en posiciones análogas de una estructura proteica;</li>
+<li>Alguien que hace biología molecular puede enfocarse en el rol funcional de esos residuos en la proteína.</li>
+</ul>
+<p>En cada caso un MSA provee un pantallazo sobre las restricciones evolutivas, estructurales o funcionales que caracterizan un set de proteínas de una manera visual e intuitiva.</p>
+<p>Un pipeline típico para realizar un MSA sería:</p>
+<ol>
+<li>Formular la pregunta que se quiere contestar. Por ejemplo,  "¿Qué estructura secundaria adopta X región de mi proteína de interés?"</li>
+<li>Obtener secuencias que puedan contestar a mi pregunta. Por ejemplo, secuencias que estén relacionadas a mi proteína de interés.</li>
+<li>Utilizar alguno de los programas disponibles para llevar a cabo el MSA. Por ej. EMBOSS</li>
+<li>Realizar ajustes manuales para corregir posibles errores de los algoritmos de alineamiento.</li>
+</ol>
+<h2 id="ejercicio-1">Ejercicio 1 </h2>
+<p>La gp120 es una proteína que recubre al virus del HIV y facilita su unión e ingreso a la célula que infecta (linfocitos CD4+)<br>
+Entre nuestros archivos contamos con un multifasta (gp120.fasta) que contiene 27 secuencias de gp120 de HIV-1, HIV-2 y SIV.<br>
+Estas proteínas contienen 9 puentes disulfuro conservados. También es de interés el loop V3, una porción expuesta de la proteína, conocido target de anticuerpos el cual constituye una región hipervariable dada la presión selectiva a la que se ve sometido.</p>
+<br>
+Pueden ver la disposición de las distintas regiones de la gp120 en el siguiente link: 
+<p><span style="font-size: 0.8em;"> Mathys L, Balzarini J. <em>Several N-Glycans on the HIV Envelope Glycoprotein gp120 Preferentially Locate Near Disulphide Bridges and Are Required for Efficient Infectivity and Virus Transmission.</em> PLoS One. 2015 Jun 29;10(6):e0130621. doi: <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0130621">10.1371/journal.pone.0130621</a>. PMID: 26121645; PMCID: PMC4488071.</span></p>
+<br>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Paso o:</strong><br>
+<p>Generá el entorno ode trabajo y descargá la seuencia gp120.</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">wget</span> <span class="token string">"https://raw.githubusercontent.com/mercedesgarnham/Tutoriales/refs/heads/main/TP4/data/gp120.fasta"</span>
+</code></pre></div>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Paso 1:</strong><br>
+<p>Utilizá las herramientas de EMBOSS para realizar un alineamiento múltiple con las secuencias de gp120 (recuerden que para buscar herramientas pueden usar <code>wossname</code>)</p>
+<p>El comando a utilizar es <code>emma</code>. Para ver la ayuda, tipeá <code>emma -help</code> en la terminal.</p>
+</div>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Paso 2:</strong><br>
+<p>Ingresa a (<a href="https://alignmentviewer.org/">https://alignmentviewer.org/</a>)[<a href="https://alignmentviewer.org/">https://alignmentviewer.org/</a>] y cargá el archivo <code>hv1a2.aln</code> para visualizar el alineamiento.</p>
+</div>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Paso 3:</strong><br>
+<p>Utilizá el comando <code>showalign</code> de EMBOSS para obtener una mejor visualización del alineamiento.</p>
+</div>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Paso 4:</strong><br>
+<p>Observá el alineamiento, como primer control podemos corroborar que las 18 Cisteínas (<strong>C</strong>) estén bien alineadas.</p>
+</div>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Paso 5:</strong><br>
+<p>Utilizá el esquema de gp120 para identificar diversas regiones ya sea conservadas o muy variables (Estructuras, loops, etc.)</p>
+<p>Notá que las posiciones en el alineamiento cuentan gaps por lo que no se corresponden exactamente con el esquema. Utilizá las posiciones de las cisteínas conservadas para identificar diferentes regiones.</p>
+</div>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Paso extra:</strong><br>
+<p>Para visualizar el árbol obtenido pueden ingresar a (<a href="https://itol.embl.de/">https://itol.embl.de/</a>)[<a href="https://itol.embl.de/">https://itol.embl.de/</a>] y cargar el archivo <code>hv1a2.dnd</code></p>
+</div>
 <hr>
 <h2 id="introducción-a-los-motivos-lineales-y-expresiones-regulares">Introducción a los motivos lineales y expresiones regulares </h2>
 <div style="border-left: 6px solid #555; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
@@ -88,56 +146,42 @@
 <p>Las expresiones regulares pueden combinarse para describir motivos más complejos. Por ejemplo, el motivo de unión a Rev1 que veremos más adelante se representa como <code>FF[^P]{0,2}[KR]{1,2}[^P]{0,4}</code>.</p>
 </div>
 <hr>
-<h2 id="ejercicio-1-construcción-de-expresiones-regulares-a-partir-de-ejemplos-de-motivos-conocidos">Ejercicio 1: Construcción de expresiones regulares a partir de ejemplos de motivos conocidos </h2>
+<h2 id="ejercicio-2-construcción-de-expresiones-regulares-a-partir-de-ejemplos-de-motivos-conocidos">Ejercicio 2: Construcción de expresiones regulares a partir de ejemplos de motivos conocidos </h2>
 <p>En este ejercicio, vamos a practicar la construcción de expresiones regulares para diferentes motivos lineales descritos en la literatura. Para cada motivo, se proporcionan ejemplos de secuencias que lo cumplen. Tu tarea es deducir la expresión regular que los representa.</p>
 <h3 id="motivo-1-doc_cyclin_rxl_1">Motivo 1: DOC_CYCLIN_RxL_1 </h3>
 <p><em>Descripción:</em> Motivo de anclaje (docking) reconocido por los complejos Ciclina/CDK de la fase S en hongos y mamíferos. La expresión regular canónica es <code>[RK].L.{0,1}[FYLIVMP]</code>.</p>
-<p>Ejemplos de secuencias que cumplen el motivo:</p>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Pregunta:</strong><br>
+<p>Indicar si estas secuencias cumplen el motivo:</p>
 <ul>
 <li><code>RMLP</code></li>
 <li><code>EKSLTSP</code></li>
 <li><code>KSLGI</code></li>
 </ul>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Paso 1:</strong><br>
-Escribe la expresión regular que representa este motivo, basándote en los ejemplos. Utiliza la sintaxis de PROSITE. Luego, verifica con regex101 que tus ejemplos coinciden.
 </div>
 <h3 id="motivo-2-lig_arl_bart_1">Motivo 2: LIG_ARL_BART_1 </h3>
 <p><em>Descripción:</em> Motivo presente en el extremo N‑terminal de las proteínas ARL2 y ARL3 que asegura la unión dependiente de GTD a BART y BARTL1. La expresión regular es <code>^..LL[^P]IL[^P][^P][LM]</code>.</p>
-<p>Ejemplos de secuencias que cumplen el motivo:</p>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Pregunta:</strong><br>
+<p>Indicar si estas secuencias cumplen el motivo:</p>
 <ul>
 <li><code>MLLLDIELDL</code></li>
 <li><code>LALLPIIEDM</code></li>
 <li><code>LALLGIIEDM</code></li>
 </ul>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Paso 2:</strong><br>
-Escribe la expresión regular para este motivo. Presta atención al símbolo `^`, que indica que el motivo debe estar al inicio de la secuencia. Verifica con los ejemplos.
 </div>
-<h3 id="motivo-3-lig_pdz_class_1">Motivo 3: LIG_PDZ_Class_1 </h3>
-<p><em>Descripción:</em> Motivo de unión a dominios PDZ de clase 1, clásicamente representado por el patrón <code>(ST)X(VIL)</code> en el extremo C‑terminal. La expresión regular es <code>[ST].[ACVILF]$</code>.</p>
-<p>Ejemplos de secuencias que cumplen el motivo:</p>
-<ul>
-<li><code>SRA-COOH</code> (termina en SRA)</li>
-<li><code>STA-COOH</code> (termina en STA)</li>
-</ul>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Paso 3:</strong><br>
-Escribe la expresión regular para este motivo. Observa el uso de `$` para indicar el extremo C‑terminal. Verifica con los ejemplos.
-</div>
-<h3 id="motivo-4-doc_pp2a_b56_1">Motivo 4: DOC_PP2A_B56_1 </h3>
+<h3 id="motivo-3-doc_pp2a_b56_1">Motivo 3: DOC_PP2A_B56_1 </h3>
 <p><em>Descripción:</em> Sitio de anclaje requerido por la subunidad reguladora B56 de la fosfatasa PP2A para la desfosforilación de proteínas. La expresión regular es <code>([LMFYWIC]..I.E) | (L..[IVLWIC].E)</code>.</p>
-<p>Ejemplos de secuencias que cumplen el motivo:</p>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Pregunta:</strong><br>
+<p>Indicar si estas secuencias cumplen el motivo:</p>
 <ul>
 <li><code>MLPAIA</code></li>
-<li><code>MLPAIAE</code> (contiene el motivo <code>MLPAIA</code>)</li>
-<li><code>MLPAWAE</code> (contiene <code>MLPAWA</code>)</li>
+<li><code>MLPAIAE</code></li>
+<li><code>MLPAWAE</code></li>
 </ul>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Paso 4:</strong><br>
-Escribe la expresión regular para este motivo. Ten en cuenta que hay dos variantes separadas por `|`. Verifica con los ejemplos.
 </div>
-<h3 id="motivo-5-motivo-de-unión-a-rev1">Motivo 5: Motivo de unión a Rev1 </h3>
+<h3 id="motivo-4-motivo-de-unión-a-rev1">Motivo 4: Motivo de unión a Rev1 </h3>
 <p><em>Descripción:</em> Motivo que media la interacción con la polimerasa TLS Rev1. La evidencia experimental indica:</p>
 <ul>
 <li>Dos fenilalaninas consecutivas (<code>FF</code>).</li>
@@ -145,7 +189,9 @@ Escribe la expresión regular para este motivo. Ten en cuenta que hay dos varian
 <li>Entre 1 y 2 aminoácidos con carga positiva (K o R) (<code>[KR]{1,2}</code>).</li>
 <li>Entre 0 y 4 aminoácidos que no pueden ser prolina (<code>[^P]{0,4}</code>).</li>
 </ul>
-<p>Ejemplos de secuencias que cumplen el motivo (fragmentos):</p>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Pregunta:</strong><br>
+<p>Indicar si estas secuencias cumplen el motivo:</p>
 <pre data-role="codeBlock" data-info="Bash" class="language-bash Bash"><code>FFSKQ
 FFSRINK
 FFIKKE
@@ -153,165 +199,14 @@ FFGKAA
 FFSKKQ
 FFQKAA
 FFDKKR
-</code></pre><div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Paso 5:</strong><br>
-Construye la expresión regular para el motivo de unión a Rev1. Escríbela y verifica con los ejemplos dados. La expresión regular canónica en la base de datos ELM es: <code>FF[^P]{0,2}[KR]{1,2}[^P]{0,4}</code>. Compara tu resultado con esta.
-</div>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 1:</strong><br>
-De todos los motivos vistos, ¿cuál tiene la expresión regular más restrictiva (menos secuencias posibles)? ¿Cuál es la más permisiva? Justifica tu respuesta.
-</div>
-<hr>
-<h2 id="ejercicio-2-conteo-de-secuencias-posibles-y-probabilidad-de-motivos">Ejercicio 2: Conteo de secuencias posibles y probabilidad de motivos </h2>
-<p>En este ejercicio vamos a calcular cuántas secuencias diferentes pueden cumplir un determinado patrón, y también estimaremos la probabilidad de que un motivo aparezca al azar en una proteína, utilizando las frecuencias de aminoácidos en el proteoma humano.</p>
-<h3 id="parte-a-conteo-de-secuencias-posibles">Parte A: Conteo de secuencias posibles </h3>
-<p>Para cada una de las siguientes expresiones regulares, calcula el número total de secuencias de la longitud indicada que cumplen el patrón. Considera que el alfabeto proteico tiene 20 aminoácidos.</p>
-<ol>
-<li><code>R.K</code> (3 aminoácidos: R, cualquier aa, K)</li>
-<li><code>R..K</code> (4 aminoácidos: R, dos cualquier aa, K)</li>
-<li><code>R.[RK]</code> (3 aminoácidos: R, cualquier aa, y luego R o K)</li>
-<li><code>R[^P][RK]</code> (3 aminoácidos: R, cualquier aa excepto P, y luego R o K)</li>
-</ol>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Paso 6:</strong><br>
-Completa la siguiente tabla:
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Expresión regular</th>
-<th style="text-align:center">Número de secuencias posibles</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>R.K</code></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center"><code>R..K</code></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center"><code>R.[RK]</code></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center"><code>R[^P][RK]</code></td>
-<td style="text-align:center"></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 2:</strong><br>
-¿Cuál de los cuatro patrones es el más restrictivo? ¿Por qué? ¿Cuál es el más permisivo?
-</div>
-<h3 id="parte-b-probabilidad-de-aparición-de-un-motivo-al-azar">Parte B: Probabilidad de aparición de un motivo al azar </h3>
-<p>Para estimar si un motivo es estadísticamente significativo, necesitamos calcular la probabilidad de que aparezca por azar en una secuencia. Para ello, utilizamos las frecuencias de aminoácidos en el proteoma humano (o en el conjunto de proteínas de interés).</p>
-<p>A continuación se muestra una tabla de frecuencias (obtenidas de UniProt, considerando regiones con puntaje de desorden IUPred ≥ 0.4):</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Aminoácido</th>
-<th style="text-align:center">Frecuencia</th>
-<th style="text-align:center">Aminoácido</th>
-<th style="text-align:center">Frecuencia</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">A (Ala)</td>
-<td style="text-align:center">0.074253</td>
-<td style="text-align:center">M (Met)</td>
-<td style="text-align:center">0.019150</td>
-</tr>
-<tr>
-<td style="text-align:center">C (Cys)</td>
-<td style="text-align:center">0.009697</td>
-<td style="text-align:center">N (Asn)</td>
-<td style="text-align:center">0.033851</td>
-</tr>
-<tr>
-<td style="text-align:center">D (Asp)</td>
-<td style="text-align:center">0.050147</td>
-<td style="text-align:center">P (Pro)</td>
-<td style="text-align:center">0.094297</td>
-</tr>
-<tr>
-<td style="text-align:center">E (Glu)</td>
-<td style="text-align:center">0.089011</td>
-<td style="text-align:center">Q (Gln)</td>
-<td style="text-align:center">0.056396</td>
-</tr>
-<tr>
-<td style="text-align:center">F (Phe)</td>
-<td style="text-align:center">0.018359</td>
-<td style="text-align:center">R (Arg)</td>
-<td style="text-align:center">0.063802</td>
-</tr>
-<tr>
-<td style="text-align:center">G (Gly)</td>
-<td style="text-align:center">0.073955</td>
-<td style="text-align:center">S (Ser)</td>
-<td style="text-align:center">0.104119</td>
-</tr>
-<tr>
-<td style="text-align:center">H (His)</td>
-<td style="text-align:center">0.025784</td>
-<td style="text-align:center">T (Thr)</td>
-<td style="text-align:center">0.059547</td>
-</tr>
-<tr>
-<td style="text-align:center">I (Ile)</td>
-<td style="text-align:center">0.026977</td>
-<td style="text-align:center">V (Val)</td>
-<td style="text-align:center">0.045399</td>
-</tr>
-<tr>
-<td style="text-align:center">K (Lys)</td>
-<td style="text-align:center">0.061170</td>
-<td style="text-align:center">W (Trp)</td>
-<td style="text-align:center">0.006850</td>
-</tr>
-<tr>
-<td style="text-align:center">L (Leu)</td>
-<td style="text-align:center">0.073093</td>
-<td style="text-align:center">Y (Tyr)</td>
-<td style="text-align:center">0.014141</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Ejemplo:</strong> El motivo <code>DP[FW]</code> (que corresponde a la clase LIG_AP2alpha_2 en ELM) tiene dos posibles variantes: <code>DPF</code> y <code>DPW</code>. La probabilidad de que aparezca al azar es:</p>
-<p><code>P(DPF) + P(DPW) = F(D)*F(P)*F(F) + F(D)*F(P)*F(W)</code></p>
-<p>Usando las frecuencias de la tabla:</p>
-<ul>
-<li><code>F(D) = 0.050147</code></li>
-<li><code>F(P) = 0.094297</code></li>
-<li><code>F(F) = 0.018359</code></li>
-<li><code>F(W) = 0.006850</code></li>
-</ul>
-<p>Entonces:</p>
-<p><code>P(DPF) = 0.050147 * 0.094297 * 0.018359 ≈ 8.68 × 10⁻⁵</code><br>
-<code>P(DPW) = 0.050147 * 0.094297 * 0.006850 ≈ 3.24 × 10⁻⁵</code><br>
-<code>P(total) = 8.68e-5 + 3.24e-5 ≈ 1.19 × 10⁻⁴</code></p>
-<p>Eso significa que, en promedio, el motivo <code>DP[FW]</code> aparecería una vez cada ~8400 aminoácidos.</p>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Paso 7:</strong><br>
-Calcula la probabilidad de aparición al azar de los siguientes motivos, utilizando las frecuencias de la tabla:
-<p>a) <code>D.[FW]</code> (D, cualquier aa, y luego F o W)<br>
-b) <code>CP</code> (C seguido de P)<br>
-c) <code>R[^P][RK]</code> (utiliza las frecuencias de R, de cualquier aa excepto P, y de R o K)</p>
-<p>Para el inciso c), recuerda que la probabilidad de <code>[^P]</code> es 1 – F(P) = 1 – 0.094297 = 0.905703. La probabilidad de <code>[RK]</code> es F(R) + F(K) = 0.063802 + 0.061170 = 0.124972.</p>
-</div>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 3:</strong><br>
-Ordena los motivos `DP[FW]`, `D.[FW]`, `CP` y `R[^P][RK]` de mayor a menor probabilidad de aparición al azar. ¿Cuál de ellos es el más raro y, por lo tanto, potencialmente más informativo?
-</div>
+</code></pre></div>
 <hr>
 <h2 id="ejercicio-3-reconocimiento-de-secuencias-que-cumplen-un-patrón">Ejercicio 3: Reconocimiento de secuencias que cumplen un patrón </h2>
-<p>Dada la siguiente expresión regular:</p>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️  Resolver: </strong><br>
+Dada la siguiente expresión regular:
 <p><code>[RK].{0,1}[P].{2}[^P]</code></p>
-<p>Indica cuáles de las siguientes secuencias <strong>cumplen</strong> el motivo (puede ser más de una):</p>
+<p>Indicar si estas secuencias cumplen el motivo:</p>
 <ul>
 <li>A. <code>RPAVL</code></li>
 <li>B. <code>KAPLRP</code></li>
@@ -319,16 +214,9 @@ Ordena los motivos `DP[FW]`, `D.[FW]`, `CP` y `R[^P][RK]` de mayor a menor proba
 <li>D. <code>RRPGPA</code></li>
 <li>E. <code>RPGPA</code></li>
 </ul>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Paso 8:</strong><br>
-Para cada secuencia, escribe si cumple o no, y justifica brevemente tu respuesta (por ejemplo, indicando qué parte del patrón falla o coincide).
-</div>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 4:</strong><br>
-¿Cuál es la longitud mínima y máxima de una secuencia que puede cumplir este motivo? (Considerando que `.{0,1}` puede ser 0 o 1 aa, y `. {2}` son exactamente 2 aa).
 </div>
 <hr>
-<h2 id="ejercicio-1-construcción-de-una-expresión-regular-a-partir-de-evidencia-experimental">Ejercicio 1: Construcción de una expresión regular a partir de evidencia experimental </h2>
+<h2 id="ejercicio-4-construcción-de-una-expresión-regular-a-partir-de-evidencia-experimental">Ejercicio 4: Construcción de una expresión regular a partir de evidencia experimental </h2>
 <p>Vamos a trabajar con el motivo de unión a la proteína <strong>Rev1</strong>, que participa en la reparación del ADN por Translesion Synthesis (TLS). La evidencia experimental (obtenida de estudios estructurales y de mutagénesis) indica que:</p>
 <ul>
 <li>El motivo está mediado por <strong>dos fenilalaninas consecutivas</strong> (FF).</li>
@@ -337,184 +225,169 @@ Para cada secuencia, escribe si cumple o no, y justifica brevemente tu respuesta
 <li>Finalmente, una región de <strong>0 a 4 aminoácidos</strong> que no pueden ser prolina (P).</li>
 </ul>
 <p>A continuación se muestran fragmentos de secuencia de proteínas que se unen a Rev1 (la interacción fue verificada experimentalmente):</p>
-<pre data-role="codeBlock" data-info="Bash" class="language-bash Bash"><code>sp<span class="token operator">|</span>Q03834<span class="token operator">|</span>MSH6_YEAST<span class="token operator">|</span><span class="token number">31</span>-38
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token operator">&gt;</span>sp<span class="token operator">|</span>Q03834<span class="token operator">|</span>MSH6_YEAST<span class="token operator">|</span><span class="token number">31</span>-38
 SQKKMKQSSLLSFFSKQVPSGTPSKKVQ
 
-sp<span class="token operator">|</span>Q60596<span class="token operator">|</span>XRCC1_MOUSE<span class="token operator">|</span><span class="token number">191</span>-200
+<span class="token operator">&gt;</span>sp<span class="token operator">|</span>Q60596<span class="token operator">|</span>XRCC1_MOUSE<span class="token operator">|</span><span class="token number">191</span>-200
 DDSANSLKPGALFFSRINKTSSASTSDPAG
 
-sp<span class="token operator">|</span>Q9H040<span class="token operator">|</span>SPRTN_HUMAN<span class="token operator">|</span><span class="token number">418</span>-428
+<span class="token operator">&gt;</span>sp<span class="token operator">|</span>Q9H040<span class="token operator">|</span>SPRTN_HUMAN<span class="token operator">|</span><span class="token number">418</span>-428
 RPRLEDKTVFDNFFIKKEQIKSSGNDPKYST
 
-sp<span class="token operator">|</span>Q15054<span class="token operator">|</span>DPOD3_HUMAN<span class="token operator">|</span><span class="token number">236</span>-245
+<span class="token operator">&gt;</span>sp<span class="token operator">|</span>Q15054<span class="token operator">|</span>DPOD3_HUMAN<span class="token operator">|</span><span class="token number">236</span>-245
 NKAPGKGNMMSNFFGKAAMNKFKVNLDSEQ
 
-sp<span class="token operator">|</span>Q9UNA4<span class="token operator">|</span>POLI_HUMAN<span class="token operator">|</span><span class="token number">569</span>-579
+<span class="token operator">&gt;</span>sp<span class="token operator">|</span>Q9UNA4<span class="token operator">|</span>POLI_HUMAN<span class="token operator">|</span><span class="token number">569</span>-579
 SCPLHASRGVLSFFSKKQMQDIPINPRDHLS
 
-sp<span class="token operator">|</span>Q9Y253<span class="token operator">|</span>POLH_HUMAN<span class="token operator">|</span><span class="token number">481</span>-490
+<span class="token operator">&gt;</span>sp<span class="token operator">|</span>Q9Y253<span class="token operator">|</span>POLH_HUMAN<span class="token operator">|</span><span class="token number">481</span>-490
 TATKKATTSLESFFQKAAERQKVKEASLSS
 
-sp<span class="token operator">|</span>Q9QUG2<span class="token operator">|</span>POLK_MOUSE<span class="token operator">|</span><span class="token number">564</span>-575
+<span class="token operator">&gt;</span>sp<span class="token operator">|</span>Q9QUG2<span class="token operator">|</span>POLK_MOUSE<span class="token operator">|</span><span class="token number">564</span>-575
 LAKPLEMSHKKSFFDKKRSERISNCQDTSRCK
-</code></pre><h3 id="️-paso-1-identificar-el-motivo-común">✏️ Paso 1: Identificar el motivo común </h3>
+</code></pre><div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Paso 1: Identificar el motivo común </strong><br>
 <ol>
 <li>
 <p>Copia las secuencias anteriores y pégalas en la herramienta <strong>regex101</strong> (<a href="https://regex101.com">https://regex101.com</a>) en el recuadro "Test String".</p>
 </li>
 <li>
-<p>En el campo "Regular Expression", escribe una expresión regular que capture el motivo descrito por la evidencia experimental. Recuerda utilizar la sintaxis:</p>
-<ul>
-<li><code>F</code> y <code>F</code> para las fenilalaninas.</li>
-<li><code>[^P]{0,2}</code> para la región sin prolina de 0 a 2 posiciones.</li>
-<li><code>[KR]{1,2}</code> para una o dos cargas positivas.</li>
-<li><code>[^P]{0,4}</code> para la región final sin prolina de 0 a 4 posiciones.</li>
-</ul>
+<p>En el campo "Regular Expression", escribe una expresión regular que capture el motivo descrito por la evidencia experimental. Recuerda utilizar la sintaxis.</p>
 </li>
 <li>
 <p>Verifica que tu expresión regular encuentre todas las secuencias del listado (debería haber al menos una coincidencia por cada fragmento).</p>
 </li>
 </ol>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 1:</strong><br>
-Escribe la expresión regular que construiste. ¿Coincide con la que se usa en la base de datos ELM (que es <code>FF[^P]{0,2}[KR]{1,2}[^P]{0,4}</code>)? Si no, ajusta la tuya para que sea equivalente.
 </div>
-<h3 id="️-paso-2-evaluar-una-secuencia-adicional">✏️ Paso 2: Evaluar una secuencia adicional </h3>
-<p>Ahora prueba si la siguiente secuencia (de la levadura <em>Saccharomyces cerevisiae</em>) cumple con el motivo:</p>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Paso 2: Evaluar una secuencia adicional</strong><br>
+<ol>
+<li>Ahora prueba si la siguiente secuencia (de la levadura <em>Saccharomyces cerevisiae</em>) cumple con el motivo:</li>
+</ol>
 <pre data-role="codeBlock" data-info="Bash" class="language-bash Bash"><code>sp<span class="token operator">|</span>Q04049<span class="token operator">|</span>POLH_YEAST<span class="token operator">|</span><span class="token number">625</span>-632
 KKQVTSSKNILSFFTRKK
-</code></pre><p>Pégala en regex101 (añádela al "Test String") y observa si tu expresión regular la reconoce.</p>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 2:</strong><br>
-¿La secuencia de levadura contiene el motivo? Si no, ¿por qué crees que podría no unirse a Rev1, a pesar de ser una polimerasa TLS? (Pista: piensa en la especificidad de especie y en la conservación evolutiva).
+</code></pre><ol start="2">
+<li>Pégala en regex101 (añádela al "Test String") y observa si tu expresión regular la reconoce.</li>
+</ol>
 </div>
 <hr>
-<h2 id="ejercicio-2-búsqueda-de-motivos-con-prosite-y-elm">Ejercicio 2: Búsqueda de motivos con PROSITE y ELM </h2>
-<p>En este ejercicio utilizaremos <strong>PROSITE</strong> (base de datos de patrones de proteínas) y <strong>ELM</strong> (base de datos de motivos lineales eucariotas) para buscar motivos en una proteína de interés: la proteína <strong>p53 humana</strong> (UniProt ID: P01308, aunque el ID correcto para p53 es P04637, pero usaremos el que aparece en los materiales).</p>
-<h3 id="️-paso-1-búsqueda-en-prosite-con-scanprosite">✏️ Paso 1: Búsqueda en PROSITE con ScanProsite </h3>
+<h2 id="introducción-de-un-msa-a-un-patrón">Introducción: de un MSA a un patrón </h2>
+<div style="border-left: 6px solid #555; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>¿Cómo nace un patrón de PROSITE?</strong><br><br>
+Cuando varias proteínas relacionadas comparten una función bioquímica puntual (por ejemplo, todas son fosforiladas por la misma quinasa, o todas unen ATP de la misma manera), sus secuencias alrededor de ese sitio funcional suelen alinearse en una columna conservada dentro de un MSA. Al observar esa región en el alineamiento:
+<ul>
+<li>Las posiciones <strong>invariantes</strong> (el mismo aminoácido en todas las secuencias) se escriben como letras fijas.</li>
+<li>Las posiciones <strong>parcialmente conservadas</strong> (un grupo reducido de aminoácidos posibles) se escriben como clases <code>[XYZ]</code>.</li>
+<li>Las posiciones sin conservación relevante se escriben como <code>x</code> (equivalente al <code>.</code> que venimos usando).</li>
+<li>Las posiciones que <strong>nunca</strong> aparecen (porque bioquímicamente impiden la función, como una prolina que rompe una hélice) se escriben como <code>{X}</code> (equivalente a <code>[^X]</code>).</li>
+</ul>
+El resultado es una expresión regular generalizada: el patrón de PROSITE. La base de datos no guarda "una secuencia ejemplo", guarda la regla derivada del alineamiento de todas las instancias conocidas.
+</div>
+<h2 id="ejercicio-5-leer-patrones-reales-de-prosite">Ejercicio 5: Leer patrones reales de PROSITE </h2>
+<p>La siguiente tabla muestra patrones reales tal como figuran en la base de datos PROSITE, con su sintaxis original (con guiones) y su equivalente en regex de estilo regex101 (con puntos):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">ID PROSITE</th>
+<th style="text-align:left">Nombre</th>
+<th style="text-align:left">¿Qué es?</th>
+<th style="text-align:left">Patrón original (PROSITE)</th>
+<th style="text-align:left">Regex equivalente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">PS00001</td>
+<td style="text-align:left">Sitio de N-glicosilación</td>
+<td style="text-align:left">Marca dónde una proteína puede recibir un azúcar (oligosacárido) unido al nitrógeno de una Asparagina (N), durante su paso por el retículo endoplasmático/Golgi. Es una de las modificaciones post-traduccionales más comunes en proteínas de membrana y secretadas.</td>
+<td style="text-align:left"><code>N-{P}-[ST]-{P}</code></td>
+<td style="text-align:left"><code>N[^P][ST][^P]</code></td>
+</tr>
+<tr>
+<td style="text-align:left">PS00005</td>
+<td style="text-align:left">Sitio de fosforilación por PKC</td>
+<td style="text-align:left"><strong>PKC (Proteína Quinasa C)</strong> es una familia de enzimas quinasas que fosforilan residuos de Serina o Treonina en proteínas blanco, activadas típicamente por diacilglicerol (DAG) y Ca²⁺. Es central en vías de transducción de señales que regulan crecimiento celular, proliferación y apoptosis.</td>
+<td style="text-align:left"><code>[ST]-x-[RK]</code></td>
+<td style="text-align:left"><code>[ST].[RK]</code></td>
+</tr>
+<tr>
+<td style="text-align:left">PS00006</td>
+<td style="text-align:left">Sitio de fosforilación por caseína quinasa II</td>
+<td style="text-align:left"><strong>CK2 (Caseína Quinasa II)</strong> es otra serina/treonina quinasa, constitutivamente activa (no depende de segundos mensajeros como PKC), que fosforila cientos de proteínas involucradas en control del ciclo celular, transcripción y respuesta al estrés.</td>
+<td style="text-align:left"><code>[ST]-x(2)-[DE]</code></td>
+<td style="text-align:left"><code>[ST].{2}[DE]</code></td>
+</tr>
+<tr>
+<td style="text-align:left">PS00009</td>
+<td style="text-align:left">Sitio de amidación</td>
+<td style="text-align:left">La <strong>amidación C-terminal</strong> es una modificación en la que el extremo C-terminal de una proteína (normalmente un ácido carboxílico) se convierte en una amida. Es un paso de maduración esencial para muchas hormonas peptídicas y neuropéptidos (por ejemplo, oxitocina, calcitonina): sin la amidación, el péptido pierde actividad biológica.</td>
+<td style="text-align:left"><code>x-G-[RK]-[RK]</code></td>
+<td style="text-align:left"><code>.G[RK][RK]</code></td>
+</tr>
+<tr>
+<td style="text-align:left">PS00017</td>
+<td style="text-align:left">Motivo A de unión a ATP/GTP (P-loop, Walker A)</td>
+<td style="text-align:left">El <strong>P-loop (Walker A)</strong> es un motivo estructural (un bucle rico en Glicinas que envuelve los fosfatos del nucleótido) presente en una enorme variedad de proteínas que unen ATP o GTP: quinasas, ATPasas, motores moleculares (miosina, kinesina), proteínas G, etc. Es uno de los motivos lineales más antiguos y conservados evolutivamente.</td>
+<td style="text-align:left"><code>[AG]-x(4)-G-K-[ST]</code></td>
+<td style="text-align:left"><code>[AG].{4}GK[ST]</code></td>
+</tr>
+</tbody>
+</table>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Resolver</strong><br>
+Para cada uno de los 5 patrones de la tabla, proponé (a mano, sin herramientas) una secuencia corta de aminoácidos que lo cumpla. Después verificá cada una en <a href="https://regex101.com" target="_blank">regex101</a> usando la columna "Regex equivalente".
+</div>
+<h3 id="escanear-una-proteína-con-scanprosite">Escanear una proteína con ScanProsite </h3>
+<p>Vamos a retomar la p53 humana (UniProt <strong>P04637</strong>) enfocándonos en los patrones de fosforilación de la tabla anterior.</p>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Pasos a seguir :</strong><br>
+1. Entrá a <a href="https://prosite.expasy.org/scanprosite/" target="_blank">ScanProsite</a>.<br>
+2. Pegá la secuencia de p53 (UniProt P04637) en formato FASTA.<br>
+3. Antes de ejecutar, <strong>destildá</strong> la opción "Exclude motifs with a high probability of occurrence" (por defecto está tildada y oculta justamente los patrones cortos y degenerados como los que vamos a buscar).<br>
+4. Ejecutá la búsqueda y, en la lista de resultados, buscá específicamente si aparecen hits para <strong>PS00005</strong> (PKC) y <strong>PS00006</strong> (caseína quinasa II).
+</div>
+<div style="border-left: 6px solid #555; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>¿Cuál es "el residuo" en cada hit?</strong><br>
+En ambos patrones (PS00005: <code>[ST].[RK]</code> y PS00006: <code>[ST].{2}[DE]</code>), el residuo que se fosforila es siempre la <strong>primera posición</strong> del match: la S o la T inicial. Las posiciones restantes del patrón no se modifican — son el contexto de secuencia que la quinasa reconoce para fosforilar esa S/T. Por ejemplo, si ScanProsite te muestra un hit "99-101: SqK", el residuo fosforilable es la <strong>Serina en la posición 99</strong> (S99); la "q" (minúscula, cualquier aminoácido) y la "K" en 101 no se fosforilan, solo marcan el contexto del sitio.
+</div>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Pregunta 2:</strong><br>
+¿Cuántos hits obtuviste para PS00005 y para PS00006? Elegí uno de esos hits y anotá el número de posición y la identidad (S o T) del residuo fosforilable (la primera posición del patrón, como se explicó arriba).
+</div>
+<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>✏️ Paso 3:</strong><br>
+Elegí uno de los hits de PS00005 o PS00006 que encontraste en p53. Buscá en UniProt si esa posición corresponde a un sitio de fosforilación experimentalmente confirmado y conservado entre ortólogos de p53 en otras especies (podés revisar la sección "PTM/Processing" de la entrada P04637 en UniProt).
+<ul>
+<li>¿El sitio que elegiste está anotado como sitio de fosforilación real en UniProt?</li>
+<li>¿Qué te dice esto sobre la relación entre "cumplir un patrón de PROSITE" y "ser un sitio funcional verificado"?</li>
+</ul>
+</div>
+<hr>
+<h2 id="ejercicio-6-de-un-motivo-a-las-proteínas-que-lo-cumplen">Ejercicio 6: De un motivo a las proteínas que lo cumplen </h2>
+<p>Hasta ahora fuimos siempre en una dirección: tenías una proteína y buscabas qué motivos contiene. Ahora vamos al revés: tenés un motivo (una regex) y buscás <strong>qué proteínas, en toda una base de datos, lo cumplen</strong>. Esto es exactamente lo que hace ELM cuando arma su catálogo, y es la otra mitad de la funcionalidad de ScanProsite (el modo "Pattern/motif search" en vez de "Protein scan").</p>
+<div style="border-left: 6px solid #555; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+<strong>Las dos direcciones de ScanProsite</strong><br><br>
+<ul>
+<li><strong>Proteína → motivos</strong> (lo que hiciste en el Ejercicio 5 y el Paso 2 de este ejercicio extra): das una secuencia, te devuelve qué patrones de PROSITE cumple.</li>
+<li><strong>Motivo → proteínas</strong> (lo que vamos a hacer ahora): das un patrón (propio o de PROSITE), y ScanProsite escanea una base de datos completa (UniProtKB/Swiss-Prot, PDB, etc.) devolviendo todas las proteínas que lo cumplen.</li>
+</ul>
+Esta segunda dirección es la que se usa para <em>descubrir</em> candidatos nuevos: por ejemplo, para encontrar proteínas humanas no descriptas todavía que podrían unir ATP porque tienen el P-loop, o proteínas que podrían interactuar con Rev1 porque tienen su motivo de anclaje.
+</div>
+<h3 id="️-paso-1-buscar-todas-las-proteínas-humanas-con-el-p-loop">✏️ Paso 1: Buscar todas las proteínas humanas con el P-loop </h3>
 <ol>
-<li>
-<p>Ve a la página de <strong>ScanProsite</strong> en ExPASy: <a href="https://prosite.expasy.org/scanprosite/">https://prosite.expasy.org/scanprosite/</a>.</p>
-</li>
-<li>
-<p>En el recuadro de texto, pega la secuencia de p53 humana (puedes obtenerla de UniProt con el ID <strong>P04637</strong>). Asegúrate de que esté en formato FASTA.</p>
-</li>
-<li>
-<p>Ejecuta la búsqueda con los parámetros por defecto (selecciona "Scan for PROSITE patterns").</p>
-</li>
-<li>
-<p>Una vez que termine, examina los resultados. La página te mostrará qué motivos (patrones) de PROSITE se encuentran en tu secuencia, junto con sus posiciones.</p>
-</li>
+<li>Entrá de nuevo a <a href="https://prosite.expasy.org/scanprosite/" target="_blank">ScanProsite</a>.</li>
+<li>Buscá en la página el formulario para ingresar un <strong>patrón</strong> en vez de una secuencia (en la interfaz suele estar como una pestaña o sección separada, distinta del cuadro de "Test String"/secuencia).</li>
+<li>Ingresá el patrón del motivo A de unión a ATP/GTP (P-loop, PS00017) en sintaxis PROSITE: <code>[AG]-x(4)-G-K-[ST]</code></li>
+<li>Restringí la búsqueda a la base de datos <strong>UniProtKB/Swiss-Prot</strong>.</li>
+<li>Ejecutá la búsqueda.</li>
 </ol>
 <div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
 <strong>✏️ Pregunta 5:</strong><br>
-¿Cuántos motivos de PROSITE se han encontrado en p53? Nombra al menos dos de ellos y explica su función (por ejemplo, sitio de fosforilación, señal de localización nuclear, etc.).
-</div>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 6:</strong><br>
-¿Aparece el motivo de unión a MDM2 (<code>F[^P]{3}W[^P]{2,3}[VIL]</code>) en los resultados de PROSITE? Si no, ¿por qué crees que no está catalogado en PROSITE? (Pista: PROSITE se enfoca en motivos bien caracterizados y de longitud fija).
-</div>
-<h3 id="️-paso-2-predicción-de-motivos-lineales-con-elm">✏️ Paso 2: Predicción de motivos lineales con ELM </h3>
-<ol>
-<li>
-<p>Ve a la página de predicción de ELM: <a href="http://elm.eu.org/">http://elm.eu.org/</a>. Haz clic en la pestaña <strong>"Prediction"</strong>.</p>
-</li>
-<li>
-<p>Ingresa el UniProt ID de p53 humana: <strong>P04637</strong>. Deja los parámetros por defecto:</p>
-<ul>
-<li><strong>Cell Compartment:</strong> Not specified</li>
-<li><strong>Motif Probability Cutoff:</strong> 100</li>
-<li><strong>Taxonomic context:</strong> (vacío)</li>
-</ul>
-</li>
-<li>
-<p>Ejecuta la predicción.</p>
-</li>
-<li>
-<p>Observa la tabla de resultados. Fíjate en la columna <strong>"Filtering Summary"</strong> para ver cuántas instancias de motivos se encontraron y cuántas fueron retenidas después de aplicar los filtros estructurales y de contexto.</p>
-</li>
-</ol>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 7:</strong><br>
-¿Cuántas instancias de motivos se predicen en p53? ¿Cuántas son retenidas tras los filtros (por ejemplo, filtros de desorden estructural)? ¿Qué motivos anotados como <strong>true positives</strong> (positivos verdaderos) aparecen?
-</div>
-<ol start="5">
-<li>
-<p>Ahora modifica los parámetros:</p>
-<ul>
-<li><strong>Cell Compartment:</strong> selecciona <strong>"Nucleus"</strong> (ya que p53 es una proteína nuclear).</li>
-<li><strong>Motif Probability Cutoff:</strong> 0.01 (para hacer la predicción más estricta).</li>
-<li><strong>Taxonomic context:</strong> escribe <strong>"Homo sapiens"</strong>.</li>
-</ul>
-</li>
-<li>
-<p>Vuelve a ejecutar la predicción.</p>
-</li>
-</ol>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 8:</strong><br>
-Compara los resultados de la predicción con filtros (punto 5) con los obtenidos sin filtros (punto 2). ¿Cuántas instancias se retienen ahora? ¿Qué motivos específicos (por ejemplo, <code>MOD_CK1_1</code>, <code>DOC_CYCLIN_RXL_1</code>) se encuentran? ¿Tiene sentido biológico que estos motivos aparezcan en p53?
+¿Cuántas proteínas humanas revisadas (Swiss-Prot) devolvió la búsqueda?
+<p>Elegí 3 al azar de la lista y fijate en su nombre/función en UniProt: ¿son consistentes con unión de nucleótidos (quinasas, ATPasas, GTPasas, motores moleculares, etc.)?</p>
 </div>
 <hr>
-<h2 id="ejercicio-3-identificación-de-motivos-sobrerepresentados-con-meme">Ejercicio 3: Identificación de motivos sobre‑representados con MEME </h2>
-<p>En este ejercicio utilizaremos <strong>MEME</strong> (<em>Multiple EM for Motif Elicitation</em>) para descubrir motivos de secuencia que estén enriquecidos en un conjunto de secuencias, sin necesidad de alinearlas previamente.</p>
-<h3 id="️-paso-1-buscar-motivos-en-las-secuencias-de-unión-a-rev1">✏️ Paso 1: Buscar motivos en las secuencias de unión a Rev1 </h3>
-<ol>
-<li>
-<p>Ve a la web de MEME: <a href="https://meme-suite.org/meme/tools/meme">https://meme-suite.org/meme/tools/meme</a>.</p>
-</li>
-<li>
-<p>En "Input the primary sequences", selecciona <strong>"Type in sequences"</strong> y pega las secuencias del Ejercicio 1 (las que contienen el motivo de unión a Rev1) en formato FASTA.</p>
-</li>
-<li>
-<p>Configura los parámetros:</p>
-<ul>
-<li><strong>Select the site distribution:</strong> <em>Zero or One Occurrence Per Sequence (zoops)</em></li>
-<li><strong>Select the number of motifs:</strong> 10</li>
-<li>En <strong>Advanced Options</strong>:
-<ul>
-<li><strong>Background model:</strong> <em>0-order model of sequences</em></li>
-<li><strong>Minimum width:</strong> 4</li>
-<li><strong>Maximum width:</strong> 12</li>
-<li><strong>Minimum sites:</strong> 2</li>
-<li><strong>Maximum sites:</strong> 10</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Ejecuta la búsqueda (puede tardar unos minutos).</p>
-</li>
-<li>
-<p>Una vez finalizada, examina los resultados. MEME mostrará los motivos encontrados, con sus logos de secuencia y sus E‑values.</p>
-</li>
-</ol>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 9:</strong><br>
-¿Recupera MEME el motivo de unión a Rev1 (el que contiene el patrón FF...) como uno de los motivos significativos? Si no, ¿a qué crees que se debe? (Pista: MEME busca motivos sin gaps, pero el motivo de Rev1 tiene regiones variables y puede ser dividido en dos motivos separados).
-</div>
-<h3 id="️-paso-2-repetir-la-búsqueda-con-secuencias-aleatorizadas">✏️ Paso 2: Repetir la búsqueda con secuencias aleatorizadas </h3>
-<ol>
-<li>
-<p>En la misma página de MEME, repite la búsqueda pero esta vez marca la opción <strong>"Shuffle the sequences"</strong> (en Advanced Options).</p>
-</li>
-<li>
-<p>Ejecuta de nuevo.</p>
-</li>
-</ol>
-<div style="border-left: 6px solid #007bff; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✏️ Pregunta 10:</strong><br>
-Compara los resultados de la búsqueda con secuencias originales y con las secuencias aleatorizadas. ¿Qué diferencias observas en los motivos encontrados y en su significancia estadística? ¿Qué nos dice esto sobre la especificidad de los motivos identificados?
-</div>
-<hr>
-<h2 id="cierre-y-reflexión-final">Cierre y reflexión final </h2>
-<p>En este TP hemos aprendido a:</p>
-<ul>
-<li>Interpretar y construir expresiones regulares para representar motivos de secuencia.</li>
-<li>Utilizar herramientas como WebLogo para visualizar la conservación en un alineamiento.</li>
-<li>Buscar motivos en bases de datos curadas (PROSITE, ELM) y entender sus limitaciones.</li>
-<li>Emplear MEME para descubrir motivos enriquecidos <em>de novo</em>.</li>
-</ul>
+<h2 id="cierre-del-tutorial">Cierre del Tutorial </h2>
 <p>Completa la siguiente tabla para resumir lo visto:</p>
 <table>
 <thead>
@@ -528,12 +401,6 @@ Compara los resultados de la búsqueda con secuencias originales y con las secue
 <tbody>
 <tr>
 <td style="text-align:left">Expresiones regulares</td>
-<td style="text-align:left">(completar)</td>
-<td style="text-align:left">(completar)</td>
-<td style="text-align:left">(completar)</td>
-</tr>
-<tr>
-<td style="text-align:left">Logos de secuencia</td>
 <td style="text-align:left">(completar)</td>
 <td style="text-align:left">(completar)</td>
 <td style="text-align:left">(completar)</td>
@@ -553,21 +420,17 @@ Compara los resultados de la búsqueda con secuencias originales y con las secue
 </tbody>
 </table>
 <div style="border-left: 6px solid #28a745; background-color: #f5f5f5; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
-<strong>✅ Objetivos alcanzados</strong><br>
+<strong>Objetivos</strong><br>
 <ul>
-<li>Comprender qué son los motivos lineales y su relevancia biológica. (Sí / No)</li>
-<li>Conocer la simbología de expresiones regulares y aplicarla en la búsqueda de motivos. (Sí / No)</li>
-<li>Utilizar herramientas web para visualizar motivos (WebLogo) y buscar en bases de datos (PROSITE, ELM). (Sí / No)</li>
-<li>Introducir el concepto de enriquecimiento de motivos con MEME. (Sí / No)</li>
+<li>Realizar un alineamiento múltiple de secuencias. (Sí / No)</li>
+<li>Aprender la simbología de las expresiones regulares y cómo se utilizan para representar motivos. (Sí / No)</li>
+<li>Construir una expresión regular a partir de evidencia experimental.  (Sí / No)</li>
 </ul>
 </div>
 <hr>
 <h2 id="bibliografía-complementaria">Bibliografía complementaria </h2>
 <ul>
 <li>PROSITE documentation: <a href="https://prosite.expasy.org/">https://prosite.expasy.org/</a></li>
-<li>ELM resource: <a href="http://elm.eu.org/">http://elm.eu.org/</a></li>
-<li>MEME Suite: <a href="https://meme-suite.org/">https://meme-suite.org/</a></li>
-<li>Crooks GE, Hon G, Chandonia JM, Brenner SE (2004) WebLogo: A sequence logo generator. Genome Research 14:1188-1190.</li>
 <li>Dinkel H, Van Roey K, Michael S, et al. (2016) ELM 2016—data update and new functionality of the eukaryotic linear motif resource. Nucleic Acids Research 44(D1): D294-D300.</li>
 </ul>
 
