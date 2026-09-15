@@ -2,10 +2,10 @@
 
 <img src="img/banner_python.png" alt="Python" width="300">
 
-### Software a usar
+### **Software a usar**
 * Python (Google Colab)
 
-### Recursos Online
+### **Recursos Online**
 * [Google Colab - Guía de inicio](https://colab.research.google.com/notebooks/intro.ipynb#scrollTo=GJBs_flRovLc)
 * [Python Tutorial (Documentación oficial)](https://docs.python.org/3/tutorial/)
 * [Pandas - User Guide](https://pandas.pydata.org/docs/user_guide/index.html)
@@ -14,11 +14,11 @@
 * [Curso Kaggle Learn - Pandas](https://www.kaggle.com/learn/pandas)
 
 
-### Objetivos
+### **Objetivos**
 * Familiarizarse con diferentes librerías del lenguaje de programación **Python**.
 * Utilizar herramientas de programación para resolver problemas biológicos.
 
-### Conocimientos previos de Python
+### **Conocimientos previos de Python**
 Ya cuentan con conocimientos básicos de Python, por lo que en este trabajo práctico no se volverán a desarrollar los conceptos fundamentales del lenguaje. De todas formas, en el Anexo encontrarán una introducción breve y práctica a algunos de estos conceptos, acompañada de ejemplos y ejercicios sencillos, que pueden utilizar como material de consulta o repaso. Allí se incluyen temas como variables (números y cadenas de texto), listas, diccionarios, booleanos, estructuras condicionales (if) y ciclos (for y while).
 
 ## **Google Colab - Empezamos con el TP**
@@ -99,7 +99,7 @@ Por ejemplo:
 * **scikit-learn** proporciona algoritmos y herramientas para *Machine Learning*.
 * **BioPython** incluye funciones específicas para bioinformática.
 
-### Instalar librerías
+### **Instalar librerías**
 
 Las librerías pueden instalarse utilizando el gestor de paquetes **pip**. Por ejemplo, para instalar **pandas** desde una terminal se utiliza:
 
@@ -111,7 +111,7 @@ Esta instalación solo es necesaria una vez por computadora.
 
 Google Colab ya incluye instaladas muchas de las librerías más utilizadas para ciencia de datos y bioinformática, entre ellas **pandas**, **numpy**, **matplotlib** y **scikit-learn**. Por lo tanto, en este curso normalmente no será necesario instalarlas.
 
-### Importar librerías
+### **Importar librerías**
 
 Aunque una librería ya esté instalada, es necesario **importarla** en cada notebook donde vayamos a utilizarla.
 
@@ -159,7 +159,7 @@ Ya conocen las **listas**, que son una de las estructuras de datos más utilizad
 
 Para este tipo de tareas existe la librería **NumPy**, que proporciona un tipo de dato llamado **array**. Un array es similar a una lista, pero está optimizado para almacenar grandes cantidades de datos del mismo tipo y realizar operaciones matemáticas de forma muy eficiente.
 
-### Crear arrays
+### **Crear arrays**
 
 Los arrays pueden crearse de distintas maneras. Una de las más comunes es utilizando la función `array()`.
 
@@ -192,7 +192,7 @@ secuencias = np.array(["ATGCGT", "GGCCTA", "TACGGA", "CCATGC"])
 
 print(secuencias)
 ```
-### Acceder a elementos de un array
+### **Acceder a elementos de un array**
 Al igual que en las listas de Python, podemos acceder a los elementos de un array utilizando índices. Recordemos que el primer elemento ocupa la posición 0.
 
 ```python
@@ -207,7 +207,7 @@ print(concentraciones[2])
 30
 ```
 
-### Operaciones matemáticas
+### **Operaciones matemáticas**
 
 Una de las principales ventajas de los arrays es que las operaciones matemáticas se realizan **elemento a elemento**.
 
@@ -278,7 +278,7 @@ Entre otras cosas, esto nos permite:
 * Evitar subir los mismos archivos cada vez que abrimos Colab.
 * Guardar automáticamente tablas, figuras y resultados para utilizarlos en el futuro.
 
-### ✏️Ejercicio 2 - Montar Google Drive
+### ✏️**Ejercicio 2 - Montar Google Drive**
 
 Para conectar Google Drive con Colab ejecuten la siguiente celda:
 
@@ -299,7 +299,7 @@ Si todo salió correctamente verán un mensaje similar a:
 Mounted at /content/drive
 ```
 
-### Acceder a los archivos
+### **Acceder a los archivos**
 
 Una vez montado el Drive, todos sus archivos estarán disponibles dentro de la carpeta:
 
@@ -317,7 +317,7 @@ df = pd.read_csv("/content/drive/MyDrive/Bioinformatica/datos.tsv", sep="\t")
 
 Del mismo modo, cualquier archivo que escriban dentro de esa carpeta quedará guardado permanentemente en su cuenta de Google Drive.
 
-### Verificar que el Drive fue montado
+### **Verificar que el Drive fue montado**
 
 Pueden comprobar que todo funciona ejecutando:
 
@@ -383,7 +383,7 @@ print(df)
 2 REC1     True     10000
 ```
 
-### Acceder a columnas
+### **Acceder a columnas**
 
 Podemos acceder a una columna indicando su nombre entre corchetes:
 
@@ -399,7 +399,7 @@ Name: gen, dtype: object
 ```
 df["gen"] ya no es un DataFrame sino una Serie (Series), que representa una única columna de la tabla.
 
-### Acceder a filas
+### **Acceder a filas**
 
 Para acceder a una fila utilizaremos `iloc` (*integer location*). `iloc` permite acceder a las filas y columnas utilizando su **posición numérica**.
 
@@ -421,7 +421,7 @@ En este TP utilizaremos `iloc`, que accede a las filas mediante su posición (0,
 
 También existe `loc`, que permite acceder a las filas utilizando sus etiquetas, índices o booleanos.
 
-### Acceder a elemento o celda
+### **Acceder a elemento o celda**
 También podemos acceder a un elemento específico de la tabla, es decir, a una celda, indicando tanto la fila como la columna.
 
 Una forma de hacerlo es utilizando iloc. Cuando utilizamos iloc, primero indicamos la fila y luego la columna:
@@ -453,7 +453,7 @@ print(df.loc[0, "expresion"])
 De esta manera, loc permite indicar la etiqueta de la fila y el nombre de la columna.
 
 
-### Filtrar con booleanos
+### **Filtrar con booleanos**
 
 Una de las operaciones más importantes al trabajar con tablas es filtrar las filas que cumplen una determinada condición.
 
@@ -477,7 +477,7 @@ print(df[(df["expresion"] > 500) & (df["esencial"] == True)])
 ```
 En este caso, & representa AND: ambas condiciones deben cumplirse.
 
-* **"Importante: combinar condiciones en pandas"**
+* **Importante: combinar condiciones en pandas**
 
 Cuando filtramos un `DataFrame` utilizando condiciones sobre columnas,
 no utilizamos `and` y `or`. En su lugar, utilizamos:
@@ -500,7 +500,7 @@ Para un **OR**:
 df[(df["expresion"] > 500) | (df["esencial"] == True)]
 ```
 
-### Resumen de la tabla
+### **Resumen de la tabla**
 
 Otra función muy útil es `info()`, que devuelve información general sobre la tabla:
 
@@ -522,7 +522,7 @@ df.describe()
 
 Esta función devuelve información como el mínimo, máximo, promedio, desvío estándar y distintos percentiles.
 
-### Escribir tablas
+### **Escribir tablas**
 
 Para guardar un DataFrame utilizaremos la función `to_csv()`. Por ejemplo:
 
@@ -588,7 +588,7 @@ Los parámetros utilizados son:
 #### ✏️ Ejercicio 4
 Creen una variable llamada **nuevo_df** y carguen la tabla creada en el punto anterior. Utilicen `print()` para confirmar que el archivo se leyó correctamente.
 
-### Datos faltantes: `NA`
+### **Datos faltantes: `NA`**
 
 En datos biológicos es frecuente encontrar **datos faltantes**. Por ejemplo, puede ocurrir que para una determinada muestra no se haya podido medir la expresión de un gen.
 
@@ -704,7 +704,7 @@ Una de las librerías más utilizadas para crear gráficos o plots en **Python**
 import matplotlib.pyplot as plt
 ```
 
-### Scatter plot
+### **Scatter plot**
 
 #### ✏️ Ejercicio 6
 Escriban y ejecuten el siguiente código:
@@ -731,7 +731,7 @@ En este ejemplo:
 * `y` contiene los valores del eje vertical.
 * `plt.show()` muestra el gráfico en pantalla.
 
-### Personalizar un gráfico
+### **Personalizar un gráfico**
 
 Podemos modificar distintos aspectos del gráfico utilizando otras funciones de `matplotlib`.
 
@@ -755,7 +755,7 @@ plt.scatter(x, y, color="red")
 plt.show()
 ```
 
-### Guardar un gráfico
+### **Guardar un gráfico**
 
 Una vez creado el gráfico, podemos guardarlo directamente desde el código utilizando:
 
@@ -773,7 +773,7 @@ plt.savefig("grafico.pdf")
 
 Es recomendable llamar a `plt.savefig()` **antes** de `plt.show()`, ya que algunas versiones de **matplotlib** limpian la figura luego de mostrarla.
 
-### Graficar datos de una tabla
+### **Graficar datos de una tabla**
 
 Muchas veces los datos que queremos visualizar se encuentran en un **DataFrame**.
 
@@ -835,7 +835,7 @@ Por ejemplo, algunas de las variables que encontraremos son:
 | `diagnosis` | Diagnóstico: benigno (`B`) o maligno (`M`) |
 
 
-### ✏️Cargar los datos
+### ✏️**Cargar los datos**
 
 Descarguen el archivo proporcionado para esta actividad y cárguenlo utilizando pandas.
 
